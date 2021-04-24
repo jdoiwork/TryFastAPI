@@ -6,7 +6,7 @@ from lagom.integrations.fast_api import FastApiIntegration
 
 T = TypeVar('T')
 
-Resolver = Callable[[Type[T]], T]
+Resolver = Callable[[Type[Any]], Any]
 
 def register(setup: Callable[[Container], Any]):
     c = Container()

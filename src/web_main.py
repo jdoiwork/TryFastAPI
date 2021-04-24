@@ -3,7 +3,7 @@
 from fastapi import FastAPI
 from services import  DbService
 from models   import Name
-from routes import home
+from routes import home, users
 import ioc
 
 
@@ -18,6 +18,7 @@ app = FastAPI()
 
 resolve = ioc.register(setup)
 
+app.include_router(users.create(resolve), prefix='/users')
 app.include_router(home.create(resolve))
 
 

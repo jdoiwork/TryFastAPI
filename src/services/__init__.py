@@ -1,12 +1,9 @@
-from typing import Callable, Type, TypeVar
+# pyright: strict, reportUnusedImport=false
 
-
-class DbService:
-    def __init__(self) -> None:
-        self.name = "sqlite"
+from services.db_service import DbService
+from services.users_service import UsersService
 
 class Service:
     def __init__(self, db: DbService):
         self.db = db
-
 
