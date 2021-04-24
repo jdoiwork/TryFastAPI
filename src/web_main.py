@@ -1,9 +1,9 @@
 # pyright: strict
 
-from fastapi import FastAPI
-from services import  DbService
+from fastapi  import FastAPI
+from services import DbService
 from models   import Name
-from routes import home, users
+from routes   import home, users
 import ioc
 
 

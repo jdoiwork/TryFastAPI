@@ -1,4 +1,5 @@
-from typing import Callable
+# pyright: strict, reportUnusedFunction=false
+
 from fastapi import APIRouter
 from loguru import logger
 
