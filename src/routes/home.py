@@ -1,11 +1,11 @@
-# pyright: strict, reportUnusedFunction=false
+# pyright: strict
 
-from fastapi import APIRouter
-from loguru import logger
+from fastapi  import APIRouter
+from loguru   import logger
 
-from models import Name
+from models   import Name
 from services import Service
-from ioc import di
+from ioc      import di
 
 router = APIRouter()
 

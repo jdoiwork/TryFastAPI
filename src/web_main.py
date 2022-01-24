@@ -1,14 +1,14 @@
 # pyright: strict
 
-from fastapi  import FastAPI, Depends, Request
+from fastapi           import FastAPI, Depends, Request
 from fastapi.responses import RedirectResponse
-from services import DbService, Service
-from models   import Name
-from ioc import container, di
+from services          import DbService, Service
+from models            import Name
+from ioc               import container, di
 
-from lagom import Container
+from lagom             import Container
 
-from routes   import home, users
+from routes            import home, users
 
 
 def setup(c: Container):

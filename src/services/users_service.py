@@ -1,6 +1,6 @@
 # pyright: strict
 
-from services.db_service import  DbService
+from services.db_service import DbService
 
 class UsersService:
     def __init__(self, db: DbService):

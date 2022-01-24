@@ -1,9 +1,9 @@
 # pyright: strict, reportUnusedFunction=false
 
-from fastapi import APIRouter
+from fastapi  import APIRouter
 
 from services import UsersService
-from ioc import di
+from ioc      import di
 
 
 
