@@ -1,21 +1,13 @@
 # pyright: strict
 
-from typing import Any, Callable, Type, TypeVar
-from lagom   import Container
-from lagom.integrations.fast_api import FastApiIntegration
+from typing import Type
+from lagom  import Container
+from lagom.integrations.fast_api import FastApiIntegration, T
 
-T = TypeVar('T')
 
-Resolver = Callable[[Type[Any]], Any]
 
-def register(setup: Callable[[Container], Any]):
-    c = Container()
+container = Container()
+deps = FastApiIntegration(container)
 
-    setup(c)
-
-    deps = FastApiIntegration(c)
-
-    def resolve(cls: Type[T]) -> T:
-        return deps.depends(cls)
-
-    return resolve
+def di(t: Type[T]) -> T:
+    return deps.depends(t)

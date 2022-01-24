@@ -13,6 +13,9 @@
                 "web_main:app",
                 "--reload"
             ],
+            "autoReload": {
+                "enable": false
+            },
             "cwd": "${workspaceFolder}/src",
             "jinja": true
         }
