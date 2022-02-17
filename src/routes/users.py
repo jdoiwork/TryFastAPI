@@ -1,4 +1,4 @@
-# pyright: strict, reportUnusedFunction=false
+# pyright: strict
 
 from fastapi import APIRouter, Depends
 
