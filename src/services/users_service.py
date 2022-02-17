@@ -1,14 +1,17 @@
 # pyright: strict
 
-from services.db_service import DbService
 
-class UsersService:
-    def __init__(self, db: DbService):
-        self.db = db
+from abc import ABC
+
+class UsersService(ABC):
+    def index(self) -> list[dict[str, str]]:
+        ...
+
+class DummyUsersService(UsersService):
+    def __init__(self):
+        pass
 
     def index(self):
-        # TODO for you: Get from db
-        # users = db.select('*').from('users')
         return [
             { "name": "jdoi-1" },
             { "name": "jdoi-2" },

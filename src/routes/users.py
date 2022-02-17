@@ -1,18 +1,17 @@
 # pyright: strict, reportUnusedFunction=false
 
-from fastapi  import APIRouter
+from fastapi import APIRouter, Depends
 
-from services import UsersService
-from ioc      import di
+from services.users_service import UsersService
 
 
 
 router = APIRouter()
 
 @router.get('/')
-def index(s: UsersService = di(UsersService)):
+def index(service: UsersService = Depends()):
     
     return {
-        "users": s.index(),           
+        "users": service.index(),           
     }
 

@@ -1,49 +1,27 @@
 # pyright: strict
 
-from fastapi           import FastAPI, Depends, Request
-from fastapi.responses import RedirectResponse
-from services          import DbService, Service
-from models            import Name
-from ioc               import container, di
+from fastapi                import FastAPI
+from lagom                  import Container
+from routes                 import users
+from services.users_service import DummyUsersService, UsersService
+from utils.dep_container    import DepContainer
 
-from lagom             import Container
-
-from routes            import home, users
-
-
-def setup(c: Container):
-    c[Name] = "world"
-
-    def db_service():
-        db = DbService()
-        db.name = "mysql"
-        return db
-    c[DbService] = db_service
-    
+def setup_container(c: Container):
+    c[UsersService] = DummyUsersService
 
 app = FastAPI()
-c = container
-
-
-def current_user(request: Request) -> str:
-    return "jdoi"
 
 @app.get("/")
-def index(
-    name: Name = di(Name),
-    s:Service = di(Service),
-    user: str = Depends(current_user)
-):
+def index():
     return {
-        "hello": name,
-        "db_name": s.db.name,
-        'user': user,
+        "hello": "world",
     }
 
-@app.get('/users')
-def redirect_to_users():
-    return RedirectResponse('/users/')
 
 app.include_router(users.router, prefix='/users')
-app.include_router(home.router)
-setup(c)
+
+# Inject with Lagom Container
+# Open http://localhost:8000/users
+c = Container()
+app.dependency_overrides = DepContainer(c).to_dependency_overrides()
+setup_container(c)
