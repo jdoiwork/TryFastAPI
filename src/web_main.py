@@ -3,11 +3,15 @@
 from fastapi                import FastAPI
 from lagom                  import Container
 from routes                 import users, admin, token
+from services.admin_service import AdminService, DummyAdminService
+from services.token_service import DummyTokenService, TokenService
 from services.users_service import DummyUsersService, UsersService
 from utils.dep_container    import DepContainer
 
 def setup_container(c: Container):
     c[UsersService] = DummyUsersService
+    c[AdminService] = DummyAdminService
+    c[TokenService] = DummyTokenService
 
 app = FastAPI()
 

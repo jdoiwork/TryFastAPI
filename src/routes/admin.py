@@ -4,12 +4,12 @@ from fastapi import APIRouter, Depends
 
 from services.users_service import UsersService
 
-from .token import oauth2_scheme
+from .token import verify_token
 
-router = APIRouter()
+router = APIRouter(dependencies=[Depends(verify_token)])
 
 @router.get('/')
-def index(service: UsersService = Depends(), token: str = Depends(oauth2_scheme)):
+def index(service: UsersService = Depends()):
     
     return {
         "users": service.index(),           

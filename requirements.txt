@@ -3,3 +3,4 @@ uvicorn
 loguru
 lagom
 python-multipart
+python-jose[cryptography]

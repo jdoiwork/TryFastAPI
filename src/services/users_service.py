@@ -1,9 +1,10 @@
 # pyright: strict
 
 
-from abc import ABC
+from abc import ABC, abstractmethod
 
 class UsersService(ABC):
+    @abstractmethod
     def index(self) -> list[dict[str, str]]:
         ...
 
