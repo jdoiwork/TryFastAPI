@@ -3,4 +3,8 @@ version: "3.8"
 services:
     webapp:
         image: python:3.10
-        
+        secrets:
+            - token_secret_key
+secrets:
+    token_secret_key:
+        file: ./secrets/token_secret_key

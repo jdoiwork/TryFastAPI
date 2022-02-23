@@ -2,7 +2,9 @@
 
 
 from typing import Protocol
-
+from loguru import logger
+from pydantic import BaseSettings
+from secrets import token_hex
 
 class SecretService(Protocol):
     @property
@@ -10,9 +12,21 @@ class SecretService(Protocol):
         ...
 
 
+class DockerSecrets(BaseSettings):
+    token_secret_key: str
+
+    class Config:
+        secrets_dir = '/run/secrets'
+
 class DummySecretService(SecretService):
     def __init__(self):
-        self._key = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
+        try:
+            ds = DockerSecrets()
+            self._key = ds.token_secret_key
+            logger.debug("read key from docker secrets.")
+        except Exception:    
+            logger.debug("use dummy key.")
+            self._key = token_hex(32)
 
     @property
     def key(self) -> str:
