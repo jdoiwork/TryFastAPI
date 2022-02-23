@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from typing import Any
 
 from jose import jwt
+from loguru import logger
 
 class TokenService(ABC):
     @abstractmethod
@@ -21,11 +22,20 @@ class DummyTokenService(TokenService):
 
     def create(self, data: dict[Any, Any], expire_delta: timedelta | None = None) -> str:
         expire = self.to_expire(expire_delta or timedelta(minutes=15))
-        return jwt.encode(data | { "exp": expire }, self.secret_key)
+        token = jwt.encode(data | { "exp": expire }, self.secret_key)
+        logger.debug({ 'token': token })
+        return token
 
     def to_expire(self, delta: timedelta) -> datetime:
         return datetime.utcnow() + delta
 
     def verify(self, token: str):
-        payload = jwt.decode(token, self.secret_key)
-        return payload
+        try:
+            logger.debug({ 'token': token })
+            payload = jwt.decode(token, self.secret_key)
+
+            return payload
+        except Exception as e:
+            logger.error(e)
+            raise e
+

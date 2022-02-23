@@ -9,7 +9,10 @@ from services.token_service import TokenService
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl='token')
 
 async def verify_token(access_token: str = Depends(oauth2_scheme), token: TokenService = Depends()):
-    token.verify(access_token)
+    try:
+        token.verify(access_token)
+    except Exception:
+        raise unauth()
 
 def unauth():
     return HTTPException(
