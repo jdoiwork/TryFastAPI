@@ -1,9 +1,10 @@
 # pyright: strict
 
 from fastapi                import FastAPI
-from lagom                  import Container
+from lagom                  import Container, Singleton
 from routes                 import users, admin, token
 from services.admin_service import AdminService, DummyAdminService
+from services.secret_service import DummySecretService, SecretService
 from services.token_service import DummyTokenService, TokenService
 from services.users_service import DummyUsersService, UsersService
 from utils.dep_container    import DepContainer
@@ -12,6 +13,7 @@ def setup_container(c: Container):
     c[UsersService] = DummyUsersService
     c[AdminService] = DummyAdminService
     c[TokenService] = DummyTokenService
+    c[SecretService] = Singleton(DummySecretService)
 
 app = FastAPI()
 
