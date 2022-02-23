@@ -1,4 +1,4 @@
-# pyright: strict, reportGeneralTypeIssues=false
+# pyright: strict, reportGeneralTypeIssues=false, reportUnknownMemberType=false
 
 from typing import Any, Callable, cast
 from lagom import Container
@@ -10,10 +10,9 @@ class DepContainer:
         self.c = container
 
     def get(self, key: Factory, default: Factory) -> Factory:
-        try:
-            # TODO: resolve `reportGeneralTypeIssues`
+        if key in self.c.defined_types:
             return lambda: self.c[key]
-        except Exception:
+        else:
             return default
 
     def to_dependency_overrides(self) -> dict[Factory, Factory]:
